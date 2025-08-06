@@ -7,7 +7,7 @@ def main():
     
 
 
-    data = scrape_stackoverflow_pages()
+    data = scrape_stackoverflow_pages(max_pages=20, delay=2)
     conn = connect_db()
     cursor = conn.cursor()
 

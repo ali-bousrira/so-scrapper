@@ -1,11 +1,19 @@
 import mariadb
+from dotenv import load_dotenv
+import os
+
+load_dotenv() 
+HOST = os.getenv("HOST")
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
+DATABASE = os.getenv("DATABASE")
 
 def create_database_if_not_exists():
     try:
         connection = mariadb.connect(
-            host="localhost",
-            user="root",
-            password="root"
+            host=HOST,
+            user=USER,
+            password=PASSWORD
         )
 
         cursor = connection.cursor()
@@ -21,14 +29,14 @@ def create_database_if_not_exists():
 def drop_table_if_exists(request ,cursor, table_name):
     if request == "y":
         cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
-        print(f"✅ Table '{table_name}' supprimée si elle existait.")
+        print(f"✅ Table '{table_name}' supprimée avant le scraping.")
 
 def connect_db():
     return mariadb.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="so_scrapper"
+        host=HOST,
+        user=USER,
+        password=PASSWORD,
+        database=DATABASE
     )
 
 def create_table(cursor):

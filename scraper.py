@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import time
 
-def scrape_stackoverflow_pages(max_pages=5, delay=2):
+def scrape_stackoverflow_pages(max_pages, delay):
     base_url = "https://stackoverflow.com/questions"
     headers = {'User-Agent': 'Mozilla/5.0'}
     all_questions = []
