@@ -19,9 +19,9 @@ def create_database_if_not_exists():
         cursor = connection.cursor()
         cursor.execute("CREATE DATABASE IF NOT EXISTS so_scrapper")
         connection.commit()  
-        print("✅ Base 'so_scrapper' créée ou déjà existante.")
+        print("Base 'so_scrapper' créée ou déjà existante.")
     except mariadb.Error as e:
-        print(f"❌ Erreur MariaDB : {e}")
+        print(f"Erreur MariaDB : {e}")
     finally:
         cursor.close()
         connection.close()
@@ -29,7 +29,7 @@ def create_database_if_not_exists():
 def drop_table_if_exists(request ,cursor, table_name):
     if request == "y":
         cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
-        print(f"✅ Table '{table_name}' supprimée avant le scraping.")
+        print(f"Table '{table_name}' supprimée avant le scraping.")
 
 def connect_db():
     return mariadb.connect(

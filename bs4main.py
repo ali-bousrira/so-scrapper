@@ -1,5 +1,5 @@
-from scraper import scrape_stackoverflow_pages
-from database import connect_db, create_table, insert_data , create_database_if_not_exists , drop_table_if_exists
+from bs4scraper import scrape_stackoverflow_pages
+from bs4database import connect_db, create_table, insert_data , create_database_if_not_exists , drop_table_if_exists
 
 def main():
     request = input("Voulez-vous supprimer la base de données existante ? (y/n) : ").strip().lower()
@@ -7,7 +7,7 @@ def main():
     
 
 
-    data = scrape_stackoverflow_pages(max_pages=20, delay=2)
+    data = scrape_stackoverflow_pages(max_pages=2000, delay=2)
     conn = connect_db()
     cursor = conn.cursor()
 

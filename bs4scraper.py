@@ -11,17 +11,22 @@ def scrape_stackoverflow_pages(max_pages, delay):
     for page in range(1, max_pages + 1):
         print(f"Scraping page {page}...")
         url = f"{base_url}?page={page}&sort=newest"
-        response = requests.get(url, headers=headers)
+        try:
+            response = requests.get(url, headers=headers, timeout=10)
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            print(f"Erreur lors de la requête vers {url} : {e}")
+            continue 
 
         if response.status_code != 200:
-            print(f"❌ Erreur page {page} : {response.status_code}")
+            print(f"Erreur page {page} : {response.status_code}")
             break
 
         soup = BeautifulSoup(response.text, 'html.parser')
         questions = soup.select(".s-post-summary")
 
         if not questions:
-            print("✅ Fin du scraping : plus de questions.")
+            print("Fin du scraping : plus de questions.")
             break
 
         for q in questions:
