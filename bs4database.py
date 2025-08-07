@@ -45,7 +45,7 @@ def create_table(cursor):
         id INT AUTO_INCREMENT PRIMARY KEY,
         title TEXT,
         link TEXT,
-        excerpt TEXT,
+        question TEXT,
         tags TEXT,
         author VARCHAR(255),
         pub_date DATETIME
@@ -54,14 +54,14 @@ def create_table(cursor):
 
 def insert_data(cursor, data):
     insert_query = """
-    INSERT INTO questions (title, link, excerpt, tags, author, pub_date)
+    INSERT INTO questions (title, link, question, tags, author, pub_date)
     VALUES (?, ?, ?, ?, ?, ?)
     """
     for q in data:
         cursor.execute(insert_query, (
             q['title'],
             q['link'],
-            q['excerpt'],
+            q['question'],
             q['tags'],
             q['author'],
             q['pub_date']
