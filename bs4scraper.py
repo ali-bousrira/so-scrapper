@@ -25,11 +25,16 @@ def scrape_page(page_num):
 
     page_results = []
     for q in questions:
+        # sert à afficher le HTML brut pour le débug
+        # print("=" * 80)
+        # print(q.prettify())  
+        # print("=" * 80)
+
         title_tag = q.select_one(".s-link")
         title = title_tag.text.strip() if title_tag else "No Title"
         link = "https://stackoverflow.com" + title_tag['href'] if title_tag else ""
 
-        question_tag = q.select_one(".s-post-summary--content-question")
+        question_tag = q.select_one(".s-post-summary--content-excerpt")
         question = question_tag.text.strip() if question_tag else ""
 
         tags = [tag.text for tag in q.select(".s-post-summary--meta-tags .post-tag")]
@@ -37,10 +42,10 @@ def scrape_page(page_num):
         author_tag = q.select_one(".s-user-card--link")
         author = author_tag.text.strip() if author_tag else "Unknown"
 
-        date_tag = q.select_one("time")
+        date_tag = q.select_one(".relativetime")
         pub_date = None
-        if date_tag and date_tag.has_attr('datetime'):
-            pub_date = datetime.fromisoformat(date_tag['datetime'].replace("Z", "+00:00"))
+        if date_tag and date_tag.has_attr('title'):
+            pub_date = datetime.fromisoformat(date_tag['title'].replace("Z", "+00:00"))
 
         page_results.append({
             "title": title,

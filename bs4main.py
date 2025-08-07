@@ -1,34 +1,35 @@
 from bs4scraper import scrape_stackoverflow_pages_parallel
-from bs4database import connect_db, create_table, insert_data, create_database_if_not_exists, drop_table_if_exists
-
+import bs4database
 def main():
+    db = bs4database.Bs4database()
+
     request = input("Voulez-vous supprimer la base de données existante ? (y/n) : ").strip().lower()
     
-    create_database_if_not_exists()
+    db.create_database_if_not_exists()
 
     # Configuration du scraping
-    max_pages = 2000
-    max_workers = 6
+    max_pages = 1000
+    max_workers = 1000
 
     print(f"Lancement du scraping parallèle de {max_pages} pages avec {max_workers} threads...")
     data = scrape_stackoverflow_pages_parallel(max_pages=max_pages, max_workers=max_workers)
 
     # Connexion à la base de données
-    conn = connect_db()
+    conn = db.connect_db()
     cursor = conn.cursor()
 
     # Suppression et création de la table
-    drop_table_if_exists(request, cursor, "questions")
-    create_table(cursor)
+    db.drop_table_if_exists(request, cursor, "questions")
+    db.create_table(cursor)
 
     # Insertion des données
-    insert_data(cursor, data)
+    db.insert_data(cursor, data)
 
     # Commit et fermeture
     conn.commit()
     conn.close()
 
-    print(f"✅ Terminé. {len(data)} questions insérées dans la base de données.")
+    print(f"Terminé. {len(data)} questions insérées dans la base de données.")
 
 if __name__ == "__main__":
     main()
