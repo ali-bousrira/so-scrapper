@@ -1,1 +1,5 @@
 /__pycache__
+.env
+stackoverflow_analysis_20250808_140552.csv
+stackoverflow_analysis_20250808_140552.json
+/__pycache__
