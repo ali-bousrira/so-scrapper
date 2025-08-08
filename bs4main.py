@@ -9,7 +9,7 @@ def main():
 
     # Configuration du scraping
     max_pages = 1000
-    max_workers = 1000
+    max_workers = 3
 
     print(f"Lancement du scraping parallèle de {max_pages} pages avec {max_workers} threads...")
     data = scrape_stackoverflow_pages_parallel(max_pages=max_pages, max_workers=max_workers)

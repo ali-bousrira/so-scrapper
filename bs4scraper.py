@@ -4,7 +4,7 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 
-# Configuration
+# constantes
 BASE_URL = "https://stackoverflow.com/questions"
 HEADERS = {'User-Agent': 'Mozilla/5.0'}
 
@@ -26,9 +26,9 @@ def scrape_page(page_num):
     page_results = []
     for q in questions:
         # sert à afficher le HTML brut pour le débug
-        # print("=" * 80)
-        # print(q.prettify())  
-        # print("=" * 80)
+        print("-" * 80)
+        print(q.prettify())  
+        print("-" * 80)
 
         title_tag = q.select_one(".s-link")
         title = title_tag.text.strip() if title_tag else "No Title"

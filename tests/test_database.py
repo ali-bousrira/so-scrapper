@@ -1,13 +1,15 @@
 import unittest
 import sqlite3
-from bs4database import create_table, insert_data
+
+import bs4database
 
 class TestDatabaseInsertion(unittest.TestCase):
     def setUp(self):
         # Création d'une bdd temporaire en memoire
+        self.db = bs4database.Bs4database()
         self.conn = sqlite3.connect(":memory:")
         self.cursor = self.conn.cursor()
-        create_table(self.cursor)
+        self.db.create_table(self.cursor)
 
     def tearDown(self):
         self.conn.close()
@@ -21,7 +23,7 @@ class TestDatabaseInsertion(unittest.TestCase):
             "author": "Alice",
             "pub_date": None
         }]
-        insert_data(self.cursor, fake_data)
+        self.db.insert_data(self.cursor, fake_data)
         self.cursor.execute("SELECT * FROM questions")
         rows = self.cursor.fetchall()
 
